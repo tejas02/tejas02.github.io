@@ -102,6 +102,7 @@
     float:right;
     opacity: 0.5;
   }
+
 </style>
 </head>
 <body>
@@ -121,6 +122,7 @@
   var mediaConstraints = {'has_audio':true, 'has_video':true};
   var isVideoMuted = false;
   var isAudioMuted = false;
+
   function initialize() {
     console.log("Initializing; room=32634659.");
     card = document.getElementById("card");
@@ -131,6 +133,7 @@
     openChannel();
     getUserMedia();
   }
+
   function openChannel() {
     console.log("Opening channel.");
     var channel = new goog.appengine.Channel('AHRlWrotIy7uvzCqu09pNfQNKLZJqlJu0CvCFaWXPqizF0P7TI6jjX-X1cYtxlkV1r1b3OFSD3zjUmUgcNlYhSvnqFfK6R0DPE7jnkPsqD-IO0_vayWeGmo');
@@ -142,6 +145,7 @@
     };
     socket = channel.open(handler);
   }
+
   function resetStatus() {
     if (!initiator) {
       setStatus("Waiting for someone to join: <a href=\"https://apprtc.appspot.com/?r=32634659\">https://apprtc.appspot.com/?r=32634659</a>");
@@ -149,6 +153,7 @@
       setStatus("Initializing...");
     }
   }
+
   function getUserMedia() {
     try {
       navigator.webkitGetUserMedia({'audio':true, 'video':true}, onUserMediaSuccess,
@@ -165,6 +170,7 @@
       }
     }
   }
+
   function createPeerConnection() {
     var pc_config = {"iceServers": [{"url": "stun:stun.l.google.com:19302"}]};
     try {
@@ -186,11 +192,13 @@
         return;
       }
     }
+
     pc.onconnecting = onSessionConnecting;
     pc.onopen = onSessionOpened;
     pc.onaddstream = onRemoteStreamAdded;
     pc.onremovestream = onRemoteStreamRemoved;
   }
+
   function maybeStart() {
     if (!started && localStream && channelReady) {
       setStatus("Connecting...");
@@ -204,9 +212,11 @@
         doCall();
     }
   }
+
   function setStatus(state) {
     footer.innerHTML = state;
   }
+
   function doCall() {
     console.log("Sending offer to peer.");
     if (isRTCPeerConnection) {
@@ -218,6 +228,7 @@
       pc.startIce();
     }
   }
+
   function doAnswer() {
     console.log("Sending answer to peer.");
     if (isRTCPeerConnection) {
@@ -230,10 +241,12 @@
       pc.startIce();
     }
   }
+
   function setLocalAndSendMessage(sessionDescription) {
     pc.setLocalDescription(sessionDescription);
     sendMessage(sessionDescription);
   }
+
   function sendMessage(message) {
     var msgString = JSON.stringify(message);
     console.log('C->S: ' + msgString);
@@ -242,8 +255,10 @@
     xhr.open('POST', path, true);
     xhr.send(msgString);
   }
+
   function processSignalingMessage(message) {
     var msg = JSON.parse(message);
+
     if (msg.type === 'offer') {
       // Callee creates PeerConnection
       if (!initiator && !started)
@@ -254,6 +269,7 @@
         pc.setRemoteDescription(new RTCSessionDescription(msg));
       else
         pc.setRemoteDescription(pc.SDP_OFFER, new SessionDescription(msg.sdp));
+
       doAnswer();
     } else if (msg.type === 'answer' && started) {
       pc.setRemoteDescription(new RTCSessionDescription(msg));
@@ -265,8 +281,10 @@
       onRemoteHangup();
     }
   }
+
   function processSignalingMessage00(message) {
     var msg = JSON.parse(message);
+
     // if (msg.type === 'offer') should not happen here.
     if (msg.type === 'answer' && started) {
       pc.setRemoteDescription(pc.SDP_ANSWER, new SessionDescription(msg.sdp));
@@ -277,6 +295,7 @@
       onRemoteHangup();
     }
   }
+
   function onChannelOpened() {
     console.log('Channel opened.');
     channelReady = true;
@@ -295,6 +314,7 @@
   function onChannelClosed() {
     console.log('Channel closed.');
   }
+
   function onUserMediaSuccess(stream) {
     console.log("User has granted access to local media.");
     var url = webkitURL.createObjectURL(stream);
@@ -308,6 +328,7 @@
     console.log("Failed to get access to local media. Error code was " + error.code);
     alert("Failed to get access to local media. Error code was " + error.code + ".");
   }
+
   function onIceCandidate(event) {
     if (event.candidate) {
       sendMessage({type: 'candidate',
@@ -318,21 +339,25 @@
       console.log("End of candidates.");
     }
   }
+
   function onIceCandidate00(candidate, moreToFollow) {
     if (candidate) {
         sendMessage({type: 'candidate',
                      label: candidate.label, candidate: candidate.toSdp()});
     }
+
     if (!moreToFollow) {
       console.log("End of candidates.");
     }
   }
+
   function onSessionConnecting(message) {
     console.log("Session connecting.");
   }
   function onSessionOpened(message) {
     console.log("Session opened.");
   }
+
   function onRemoteStreamAdded(event) {
     console.log("Remote stream added.");
     var url = webkitURL.createObjectURL(event.stream);
@@ -344,12 +369,14 @@
   function onRemoteStreamRemoved(event) {
     console.log("Remote stream removed.");
   }
+
   function onHangup() {
     console.log("Hanging up.");
     transitionToDone();
     stop();
     // will trigger BYE from server
     socket.close();
+
   }
    
   function onRemoteHangup() {
@@ -358,6 +385,7 @@
     stop();
     initiator = 0;
   }
+
   function stop() {
     started = false;
     isRTCPeerConnection = true;
@@ -366,6 +394,7 @@
     pc.close();
     pc = null;
   }
+
   function waitForRemoteVideo() {
     if (remoteStream.videoTracks.length === 0 || remoteVideo.currentTime > 0) {
       transitionToActive();
@@ -396,11 +425,13 @@
   function enterFullScreen() {
     container.webkitRequestFullScreen();
   }
+
   function toggleVideoMute() {
     if (localStream.videoTracks.length === 0) {
       console.log("No local video available.");
       return;
     }
+
     if (isVideoMuted) {
       for (i = 0; i < localStream.videoTracks.length; i++) {
         localStream.videoTracks[i].enabled = true;
@@ -412,13 +443,16 @@
       }
       console.log("Video muted.");
     }
+
     isVideoMuted = !isVideoMuted;    
   }
+
   function toggleAudioMute() {
     if (localStream.audioTracks.length === 0) {
       console.log("No local audio available.");
       return;
     }
+
     if (isAudioMuted) {
       for (i = 0; i < localStream.audioTracks.length; i++) {
         localStream.audioTracks[i].enabled = true;
@@ -430,14 +464,18 @@
       }
       console.log("Audio muted.");
     }
+
     isAudioMuted = !isAudioMuted;  
   }
+
   setTimeout(initialize, 1);
+
   // Send BYE on refreshing(or leaving) a demo page
   // to ensure the room is cleaned for next session.
   window.onbeforeunload = function() {
     sendMessage({type: 'bye'});
   }
+
   // Ctrl-D: toggle audio mute; Ctrl-E: toggle video mute.
   // On Mac, Command key is instead of Ctrl.
   // Return false to screen out original Chrome shortcuts.
