@@ -140,44 +140,6 @@ $(document).ready(function() {
 </head> 
  
 <body> 
-
-<button type="button" onclick="myFunction()">Audio Call</button>
-function myFunction(){
-var conn = peer.connect('another-peers-id');
-conn.on('open', function(){
-  conn.send('hi!');
-});
-peer.on('connection', function(conn) {
-  conn.on('data', function(data){
-    // Will print 'hi!'
-    console.log(data);
-  });
-});
-navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
-navigator.getUserMedia({video: true, audio: true}, function(stream) {
-  var call = peer.call('another-peers-id', stream);
-  call.on('stream', function(remoteStream) {
-    // Show stream in some <video> element.
-  });
-}, function(err) {
-  console.log('Failed to get local stream' ,err);
-});
-navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
-peer.on('call', function(call) {
-  navigator.getUserMedia({video: true, audio: true}, function(stream) {
-    call.answer(stream); // Answer the call with an A/V stream.
-    call.on('stream', function(remoteStream) {
-      // Show stream in some <video> element.
-    });
-  }, function(err) {
-    console.log('Failed to get local stream' ,err);
-  });
-});
-
-
-
-}
-
   <div id="actions">
     Your PeerJS ID is <span id="pid"></span><br>
     Connect to a peer: <input type="text" id="rid" placeholder="Someone else's id"><input class="button" type="button" value="Connect" id="connect"><br><br>
