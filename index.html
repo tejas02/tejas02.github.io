@@ -27,7 +27,7 @@
     $(function(){
       $('#make-call').click(function(){
         // Initiate a call! Removing.val()
-        var call = peer.call($('#callto-id'), window.localStream);
+        var call = peer.call($('#callto-id').val().window.localStream);
         step3(call);
       });
       $('#end-call').click(function(){
