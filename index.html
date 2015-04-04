@@ -20,9 +20,6 @@ peer.on('open', function(id){
 // Await connections from others
 peer.on('connection', connect);
 // Handle a connection object.
- 
-
-
 function connect(c) {
   // Handle a chat connection.
   if (c.label === 'chat') {
@@ -135,11 +132,7 @@ $(document).ready(function() {
   // Show browser version
   $('#browsers').text(navigator.userAgent);
 });
-
-}
-
 </script>
-
 </head> 
  
 <body> 
