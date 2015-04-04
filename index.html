@@ -19,7 +19,7 @@ peer.on('open', function(id){
 });
 // Await connections from others
 peer.on('connection', connect);
-//Code for Audi-Video Call
+/*Code for Audi-Video Call
 var getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
 getUserMedia({video: true, audio: true}, function(stream) {
   var call = peer.call('another-peers-id', stream);
@@ -42,7 +42,7 @@ peer.on('call', function(call) {
   });
 });
 
-
+*/
 // Handle a connection object.
 function connect(c) {
   // Handle a chat connection.
