@@ -134,10 +134,7 @@ $(document).ready(function() {
   }
   // Show browser version
   $('#browsers').text(navigator.userAgent);
-});
-</script>
-
-<button type="button" onclick="myFunction()">Audio Call</button>
+});<button type="button" onclick="myFunction()">Audio Call</button>
 function myFunction(){
 var conn = peer.connect('another-peers-id');
 conn.on('open', function(){
@@ -173,6 +170,9 @@ peer.on('call', function(call) {
 
 
 }
+
+</script>
+
 </head> 
  
 <body> 
