@@ -24,8 +24,8 @@
       step2 ();
     });
     // Click handlers setup
-    $(function(){
-      $('#make-call').click(function(){
+    $(function()){
+      $('#make-call').click(function()){
         // Initiate a call!
         var call
         call = peer.call($('#callto-id').val(), window.localStream);
