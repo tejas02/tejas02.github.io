@@ -28,19 +28,19 @@
       $('#make-call').click(function(){
         // Initiate a call!
         var call = peer.call($('#callto-id').val(), window.localStream);
-        step3(call);
+        step3 (call);
       });
       $('#end-call').click(function(){
         window.existingCall.close();
-        step2();
+        step2 ();
       });
       // Retry if getUserMedia fails
       $('#step1-retry').click(function(){
         $('#step1-error').hide();
-        step1();
+        step1 ();
       });
       // Get things started
-      step1();
+      step1 ();
     });
     function step1 () {
       // Get audio/video stream
