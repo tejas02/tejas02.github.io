@@ -16,12 +16,12 @@
     peer.on('call', function(call){
       // Answer the call automatically (instead of prompting user) for demo purposes
       call.answer(window.localStream);
-      step3(call);
+      step3 (call);
     });
     peer.on('error', function(err){
       alert(err.message);
       // Return to step 2 if error occurs
-      step2();
+      step2 ();
     });
     // Click handlers setup
     $(function(){
@@ -48,7 +48,7 @@
         // Set your video displays
         $('#my-video').prop('src', URL.createObjectURL(stream));
         window.localStream = stream;
-        step2();
+        step2 ();
       }, function(){ $('#step1-error').show(); });
     }
     function step2 () {
