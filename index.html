@@ -82,7 +82,7 @@
 	<p align="center"><input type="button" id="share_screen" value="Share screen"/></p>
 	<p align="center"><video id="video" autoplay/></p>
 	<script language="javascript">
-     	navigator.getUserMedia = navigator.webkitGetUserMedia || navigator.getUserMedia;
+     	navigator.getUserMedia = navigator.webkitGetUserMedia || navigator.getUserMedia || navigator.mozGetUserMedia;
      	$('#share_screen').click(function() {
           	navigator.getUserMedia({
                    	audio: false,
