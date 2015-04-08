@@ -76,19 +76,19 @@
       //Code for screen share
 <head>
 	<title>Screen sharing example</title>
-	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+	<script src="https://code.jquery.com/jquery-1.10.1.min.js "></script>
 </head>
 <body>
 	<p align="center"><input type="button" id="share_screen" value="Share screen"/></p>
 	<p align="center"><video id="video" autoplay/></p>
 	<script language="javascript">
-     	navigator.getUserMedia = navigator.webkitGetUserMedia || navigator.getUserMedia || navigator.mozGetUserMedia;
+     	navigator.getUserMedia = navigator.webkitGetUserMedia || navigator.getUserMedia;
      	$('#share_screen').click(function() {
           	navigator.getUserMedia({
                    	audio: false,
                    	video: {
                        	mandatory: {
-                           	MediaEngineTabVideoSource: 'SourceMediaStream',
+                           	chromeMediaSource: 'screen',
                            	maxWidth: 1280,
                            	maxHeight: 720
                        	},
