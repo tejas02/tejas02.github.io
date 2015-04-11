@@ -45,11 +45,7 @@
     });
     function step1 () {
       // Get audio/video stream
-      navigator.getUserMedia({audio: true, video: {
-                           	chromeMediaSource: 'screen',
-                           	maxWidth: 1280,
-                           	maxHeight: 720
-                       	},},function(stream){
+      navigator.getUserMedia({audio: true, video: 'screen',function(stream){
         // Set your video displays
         $('#my-video').prop('src', URL.createObjectURL(stream));
         window.localStream = stream;
