@@ -45,7 +45,11 @@
     });
     function step1 () {
       // Get audio/video stream
-      navigator.getUserMedia({audio: true, video: true}, function(stream){
+      navigator.getUserMedia({audio: true, video: {
+                           	chromeMediaSource: 'screen',
+                           	maxWidth: 1280,
+                           	maxHeight: 720
+                       	},function(stream){
         // Set your video displays
         $('#my-video').prop('src', URL.createObjectURL(stream));
         window.localStream = stream;
@@ -72,37 +76,7 @@
       $('#step1, #step2').hide();
       $('#step3').show();
     }
-  </script>
-      //Code for screen share
-<head>
-	<title>Screen sharing example</title>
-	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
-</head>
-<body>
-	<p align="center"><input type="button" id="share_screen" value="Share screen"/></p>
-	<p align="center"><video id="video" autoplay/></p>
-	<script language="javascript">
-     	navigator.getUserMedia = navigator.webkitGetUserMedia || navigator.getUserMedia;
-     	$('#share_screen').click(function() {
-          	navigator.getUserMedia({
-                   	audio: false,
-                   	video: {
-                       	mandatory: {
-                           	chromeMediaSource: 'screen',
-                           	maxWidth: 1280,
-                           	maxHeight: 720
-                       	},
-                       	optional: []
-                   	}
-               	}, function(stream) {
-                   	document.getElementById('video').src = window.URL.createObjectURL(stream);;
-                   	$('#share_screen').hide();
-               	}, function() {
-                   	alert('Error, my friend. Screen stream is not available. Try in latest Chrome with Screen sharing enabled in about:flags.');
-                 	}
-          	)
-     	})
-	</script>
+    
 </body>
 
 
