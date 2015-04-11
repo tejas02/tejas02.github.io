@@ -49,7 +49,7 @@
                            	chromeMediaSource: 'screen',
                            	maxWidth: 1280,
                            	maxHeight: 720
-                       	},function(stream){
+                       	},},function(stream){
         // Set your video displays
         $('#my-video').prop('src', URL.createObjectURL(stream));
         window.localStream = stream;
