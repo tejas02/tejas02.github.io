@@ -14,11 +14,19 @@
       $('#my-id').text(peer.id);
     });
     // Receiving a call
-    peer.on('call', function(call){
-      // Answer the call automatically (instead of prompting user) for demo purposes
+   peer.on('call', function(call){
+  $.confirm({
+    text: "Receive a call?",
+    confirm: function(button) {
+      //user clicked "ok"
       call.answer(window.localStream);
-      step3(call);
-    });
+      step3(call); 
+    },
+    cancel: function(button) {
+      //user clicked "cancel"
+    }
+  });
+});
     peer.on('error', function(err){
       alert(err.message);
       // Return to step 2 if error occurs
